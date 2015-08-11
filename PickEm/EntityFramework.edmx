@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ASPNETDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ASPNETDBModelStoreContainer">
+          <EntitySet Name="aspnet_Users" EntityType="ASPNETDBModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Game" EntityType="ASPNETDBModel.Store.Game" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Teams" EntityType="ASPNETDBModel.Store.Teams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserSelection" EntityType="ASPNETDBModel.Store.UserSelection" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Game_Teams" Association="ASPNETDBModel.Store.FK_Game_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Teams1" Association="ASPNETDBModel.Store.FK_Game_Teams1">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Teams2" Association="ASPNETDBModel.Store.FK_Game_Teams2">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teams_Teams" Association="ASPNETDBModel.Store.FK_Teams_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Teams1" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserSelection_aspnet_Users" Association="ASPNETDBModel.Store.FK_UserSelection_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="UserSelection" EntitySet="UserSelection" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="LoweredUserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="MobileAlias" Type="nvarchar" MaxLength="16" />
+          <Property Name="IsAnonymous" Type="bit" Nullable="false" />
+          <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Week" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="HomeTeamID" Type="bigint" Nullable="false" />
+          <Property Name="AwayTeamID" Type="bigint" Nullable="false" />
+          <Property Name="PointsValue" Type="int" Nullable="false" />
+          <Property Name="WinnerTeamID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teams">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserSelection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameID" Type="bigint" Nullable="false" />
+          <Property Name="SelectedTeamID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Game_Teams">
+          <End Role="Teams" Type="ASPNETDBModel.Store.Teams" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Store.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="AwayTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Teams1">
+          <End Role="Teams" Type="ASPNETDBModel.Store.Teams" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Store.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="HomeTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Teams2">
+          <End Role="Teams" Type="ASPNETDBModel.Store.Teams" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Store.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="WinnerTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teams_Teams">
+          <End Role="Teams" Type="ASPNETDBModel.Store.Teams" Multiplicity="1" />
+          <End Role="Teams1" Type="ASPNETDBModel.Store.Teams" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Teams1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserSelection_aspnet_Users">
+          <End Role="aspnet_Users" Type="ASPNETDBModel.Store.aspnet_Users" Multiplicity="1" />
+          <End Role="UserSelection" Type="ASPNETDBModel.Store.UserSelection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSelection">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ASPNETDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="EntityFramework" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aspnet_Users" EntityType="ASPNETDBModel.aspnet_Users" />
+          <EntitySet Name="Games" EntityType="ASPNETDBModel.Game" />
+          <EntitySet Name="Teams" EntityType="ASPNETDBModel.Team" />
+          <EntitySet Name="UserSelections" EntityType="ASPNETDBModel.UserSelection" />
+          <AssociationSet Name="FK_UserSelection_aspnet_Users" Association="ASPNETDBModel.FK_UserSelection_aspnet_Users">
+            <End Role="aspnet_Users" EntitySet="aspnet_Users" />
+            <End Role="UserSelection" EntitySet="UserSelections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Teams" Association="ASPNETDBModel.FK_Game_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Teams1" Association="ASPNETDBModel.FK_Game_Teams1">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Game_Teams2" Association="ASPNETDBModel.FK_Game_Teams2">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teams_Teams" Association="ASPNETDBModel.FK_Teams_Teams">
+            <End Role="Teams" EntitySet="Teams" />
+            <End Role="Teams1" EntitySet="Teams" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aspnet_Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="LoweredUserName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
+          <Property Name="MobileAlias" Type="String" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="IsAnonymous" Type="Boolean" Nullable="false" />
+          <Property Name="LastActivityDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="UserSelections" Relationship="ASPNETDBModel.FK_UserSelection_aspnet_Users" FromRole="aspnet_Users" ToRole="UserSelection" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Week" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="HomeTeamID" Type="Int64" Nullable="false" />
+          <Property Name="AwayTeamID" Type="Int64" Nullable="false" />
+          <Property Name="PointsValue" Type="Int32" Nullable="false" />
+          <Property Name="WinnerTeamID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Team" Relationship="ASPNETDBModel.FK_Game_Teams" FromRole="Game" ToRole="Teams" />
+          <NavigationProperty Name="Team1" Relationship="ASPNETDBModel.FK_Game_Teams1" FromRole="Game" ToRole="Teams" />
+          <NavigationProperty Name="Team2" Relationship="ASPNETDBModel.FK_Game_Teams2" FromRole="Game" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="Team">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Games" Relationship="ASPNETDBModel.FK_Game_Teams" FromRole="Teams" ToRole="Game" />
+          <NavigationProperty Name="Games1" Relationship="ASPNETDBModel.FK_Game_Teams1" FromRole="Teams" ToRole="Game" />
+          <NavigationProperty Name="Games2" Relationship="ASPNETDBModel.FK_Game_Teams2" FromRole="Teams" ToRole="Game" />
+          <NavigationProperty Name="Teams1" Relationship="ASPNETDBModel.FK_Teams_Teams" FromRole="Teams" ToRole="Teams1" />
+          <NavigationProperty Name="Team1" Relationship="ASPNETDBModel.FK_Teams_Teams" FromRole="Teams1" ToRole="Teams" />
+        </EntityType>
+        <EntityType Name="UserSelection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameID" Type="Int64" Nullable="false" />
+          <Property Name="SelectedTeamID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="aspnet_Users" Relationship="ASPNETDBModel.FK_UserSelection_aspnet_Users" FromRole="UserSelection" ToRole="aspnet_Users" />
+        </EntityType>
+        <Association Name="FK_UserSelection_aspnet_Users">
+          <End Role="aspnet_Users" Type="ASPNETDBModel.aspnet_Users" Multiplicity="1" />
+          <End Role="UserSelection" Type="ASPNETDBModel.UserSelection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserSelection">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Teams">
+          <End Role="Teams" Type="ASPNETDBModel.Team" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="AwayTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Teams1">
+          <End Role="Teams" Type="ASPNETDBModel.Team" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="HomeTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Game_Teams2">
+          <End Role="Teams" Type="ASPNETDBModel.Team" Multiplicity="1" />
+          <End Role="Game" Type="ASPNETDBModel.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="WinnerTeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teams_Teams">
+          <End Role="Teams" Type="ASPNETDBModel.Team" Multiplicity="1" />
+          <End Role="Teams1" Type="ASPNETDBModel.Team" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Teams">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Teams1">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ASPNETDBModelStoreContainer" CdmEntityContainer="EntityFramework">
+          <EntitySetMapping Name="aspnet_Users">
+            <EntityTypeMapping TypeName="ASPNETDBModel.aspnet_Users">
+              <MappingFragment StoreEntitySet="aspnet_Users">
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoweredUserName" ColumnName="LoweredUserName" />
+                <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
+                <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
+                <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="ASPNETDBModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="HomeTeamID" ColumnName="HomeTeamID" />
+                <ScalarProperty Name="AwayTeamID" ColumnName="AwayTeamID" />
+                <ScalarProperty Name="PointsValue" ColumnName="PointsValue" />
+                <ScalarProperty Name="WinnerTeamID" ColumnName="WinnerTeamID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teams">
+            <EntityTypeMapping TypeName="ASPNETDBModel.Team">
+              <MappingFragment StoreEntitySet="Teams">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserSelections">
+            <EntityTypeMapping TypeName="ASPNETDBModel.UserSelection">
+              <MappingFragment StoreEntitySet="UserSelection">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="SelectedTeamID" ColumnName="SelectedTeamID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="EntityFramework">
+        <EntityTypeShape EntityType="ASPNETDBModel.aspnet_Users" Width="1.5" PointX="0.75" PointY="5" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETDBModel.Game" Width="1.5" PointX="3" PointY="1" Height="2.9417936197916656" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETDBModel.Team" Width="1.5" PointX="0.75" PointY="1.25" Height="2.3648893229166656" IsExpanded="true" />
+        <EntityTypeShape EntityType="ASPNETDBModel.UserSelection" Width="1.5" PointX="3" PointY="5.25" Height="1.9802864583333335" IsExpanded="true" />
+        <AssociationConnector Association="ASPNETDBModel.FK_UserSelection_aspnet_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.2401432291666667" />
+          <ConnectorPoint PointX="3" PointY="6.2401432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="ASPNETDBModel.FK_Game_Teams" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.4324446614583328" />
+          <ConnectorPoint PointX="3" PointY="2.4324446614583328" />
+        </AssociationConnector>
+        <AssociationConnector Association="ASPNETDBModel.FK_Game_Teams1" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.7787223307291664" />
+          <ConnectorPoint PointX="3" PointY="1.7787223307291664" />
+        </AssociationConnector>
+        <AssociationConnector Association="ASPNETDBModel.FK_Game_Teams2" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.0861669921874992" />
+          <ConnectorPoint PointX="3" PointY="3.0861669921874992" />
+        </AssociationConnector>
+        <AssociationConnector Association="ASPNETDBModel.FK_Teams_Teams" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.2819230769230767" PointY="3.6148893229166656" />
+          <ConnectorPoint PointX="1.2819230769230767" PointY="3.8648893229166656" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="3.8648893229166656" />
+          <ConnectorPoint PointX="1.7284615384615383" PointY="3.6148893229166656" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
